@@ -1,0 +1,40 @@
+server:
+  port: 8700
+
+spring:
+  application:
+    name: first-provider
+    version: v1.0.1
+  #连接池
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///chapter?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    hikari:
+      pool-name: sitacs_hikari_cp
+      initial-size: 5
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 180000
+      max-lifetime: 1800000
+      connection-timeout: 15000
+      auto-commit: false
+      connection-test-query: SELECT 1
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}-${spring.application.version}:${server.port}
+    appname: ${spring.application.name}
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://admin:123456@localhost:8761/eureka
+
+#---mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zsq.provider.entity
+
+

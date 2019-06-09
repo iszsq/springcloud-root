@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zsq</groupId>
+    <artifactId>springcloud-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>first-ek-server</module>
+        <module>first-ek-service-provider</module>
+        <module>first-ek-service-invoker</module>
+        <module>first-ek-zuul</module>
+    </modules>
+    <packaging>pom</packaging><!--打包方式-->
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
+        <spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>
+        <tk.mybatis.version>2.0.3-beta1</tk.mybatis.version>
+        <tk.mybatis.mapper.version>4.0.0</tk.mybatis.mapper.version>
+        <project.db.jdbc.mysql.version>8.0.15</project.db.jdbc.mysql.version>
+    </properties>
+
+    <!--就是管理版本的标签， 其下的dependencies标签只是版本的管理，并不依赖jar，子类引用后不用指定版本号，达到版本控制-->
+    <dependencyManagement>
+        <dependencies>
+            <!--spring boot 依赖-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--spring zuul 依赖-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--tk mybatis-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk.mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>${tk.mybatis.mapper.version}</version>
+            </dependency>
+
+            <!--mysql 驱动-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${project.db.jdbc.mysql.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <!-- 一般而言，target与source是保持一致的，但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中不能使用低版本jdk中不支持的语法)，会存在target不同于source的情况 -->
+                        <source>${java.version}</source> <!-- 源代码使用的JDK版本 -->
+                        <target>${java.version}</target> <!-- 需要生成的目标class文件的编译版本 -->
+                        <encoding>${project.build.sourceEncoding}}</encoding><!-- 字符集编码 -->
+                        <!--如果没有这个属性 springBoot 自动配置不会生效-->
+                        <fork>true</fork>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
