@@ -22,7 +22,7 @@
         <spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>
         <tk.mybatis.version>2.0.3-beta1</tk.mybatis.version>
         <tk.mybatis.mapper.version>4.0.0</tk.mybatis.mapper.version>
-        <project.db.jdbc.mysql.version>8.0.15</project.db.jdbc.mysql.version>
+        <project.db.jdbc.mysql.version>8.0.28</project.db.jdbc.mysql.version>
     </properties>
 
     <!--就是管理版本的标签， 其下的dependencies标签只是版本的管理，并不依赖jar，子类引用后不用指定版本号，达到版本控制-->
